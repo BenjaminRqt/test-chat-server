@@ -6,16 +6,16 @@ module.exports = {
             this._handleResponse(err, users, res)
         })
     },
-    getById (req, res) {
-        User.findOne({_id: req.params.userId})
+    getByUsername (req, res) {
+        User.findOne({_id: req.params.username})
             .exec((err, user) => {
                 this._handleResponse(err, user, res)
             })
     },
     create(req, res) {
-        console.log(req.body)
         User.create({
-            username: req.body.username
+            username: req.body.username,
+            password: req.body.password
         }).then((data) => {
             res.send(data)
         })

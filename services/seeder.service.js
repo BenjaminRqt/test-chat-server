@@ -17,7 +17,8 @@ module.exports = {
 
         Array.from(Array(config.numberOfUsers)).forEach(() => {
             users.push({
-                username: faker.lorem.sentence(1)
+                username: faker.lorem.sentence(1),
+                password: 'test'
             })
         })
 
