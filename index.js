@@ -1,9 +1,12 @@
+const apiRoutes = require('./routes/api');
+
 const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3030
 const bodyParser = require('body-parser')
 const config = require('./config/index')
+
 const seederService = require('./services/seeder.service');
 
 mongoose.connect(config.dbConnection, { useNewUrlParser: true})
@@ -20,7 +23,6 @@ const corsConfig = function(req, res, next) {
 
 app.use(corsConfig);
 
-const apiRoutes = require('./routes/api');
 app.use('/api', apiRoutes);
 
 if (config.seedData) {
