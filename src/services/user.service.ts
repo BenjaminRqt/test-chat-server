@@ -1,18 +1,18 @@
-const User = require('../models/user.model')
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import User from '../models/user.model'
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 module.exports = {
-    login (req, res) {
+    login (req: any, res: any) {
         User.findOne({ username: req.body.username }).then(
-            (user) => {
+            (user: User) => {
                 if (!user) {
                     return res.status(401).json({
                         error: new Error('User not found!')
                     });
                 }
                 bcrypt.compare(req.body.password, user.password).then(
-                    (valid) => {
+                    (valid: boolean) => {
                         if (!valid) {
                             return res.status(401).json({
                                 error: new Error('Incorrect password!')
@@ -25,46 +25,45 @@ module.exports = {
 
                         res.status(200).json({
                             userId: user._id,
-                            token: token
+                            token
                         });
                     }
                 ).catch(
-                    (error) => {
+                    (error: Error) => {
                         res.status(500).json({
-                            error: error
+                            error
                         });
                     }
                 );
             }
         ).catch(
-            (error) => {
+            (error: Error) => {
                 res.status(500).json({
-                    error: error
+                    error
                 });
             }
         );
     },
-    getAll (req, res) {
-        User.find({}, ["username", "password"], (err, users) => {
-            console.log(users)
+    getAll (req: any, res: any) {
+        User.find({}, ["username", "password"], (err: Error, users: User) => {
             this._handleResponse(err, users, res)
         })
     },
-    getByUsername (req, res) {
+    getByUsername (req: any, res: any) {
         User.findOne({_id: req.params.username})
-            .exec((err, user) => {
+            .exec((err: Error, user: User) => {
                 this._handleResponse(err, user, res)
             })
     },
-    create(req, res) {
+    create(req: any, res: any) {
         User.create({
             username: req.body.username,
             password: req.body.password
-        }).then((data) => {
+        }).then((data: any) => {
             res.send(data)
         })
     },
-    _handleResponse (err, data, res) {
+    _handleResponse (err: any, data: any, res: any) {
         if (err) {
             res.status(400).end()
         } else {

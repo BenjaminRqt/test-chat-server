@@ -1,11 +1,11 @@
-const express = require("express")
+import express from "express"
 const router = express.Router()
-const userService = require("../services/user.service")
-const auth = require('../middleware/auth');
+import userService from "../services/user.service"
+import auth from '../middleware/auth'
 
 router.get("/users", auth, userService.getAll.bind(userService))
 router.get("/users/:username", userService.getByUsername.bind(userService))
 router.post("/users", userService.create.bind(userService))
 router.post("/login", userService.login.bind(userService))
 
-module.exports = router
+export default router

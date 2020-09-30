@@ -1,4 +1,4 @@
-const apiRoutes = require('./routes/api');
+const apiRoutes = require('./src/routes/api');
 
 const mongoose = require('mongoose')
 const express = require('express')
@@ -7,7 +7,7 @@ const port = 3030
 const bodyParser = require('body-parser')
 const config = require('./config/index')
 
-const seederService = require('./services/seeder.service');
+const seederService = require('./src/services/seeder.service');
 
 mongoose.connect(config.dbConnection, { useNewUrlParser: true})
 
