@@ -1,6 +1,6 @@
 const faker = require('faker')
 const User = require('../models/user.model')
-const config = require('../config/index')
+const config = require('../../config')
 
 module.exports = {
     seedData () {
