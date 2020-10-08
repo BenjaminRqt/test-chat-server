@@ -46,7 +46,6 @@ module.exports = {
     },
     getAll (req, res) {
         User.find({}, ["username", "password"], (err, users) => {
-            console.log(users)
             this._handleResponse(err, users, res)
         })
     },
@@ -57,12 +56,26 @@ module.exports = {
             })
     },
     create(req, res) {
+        if(this._exist(req.body.username)) {
+            res.status(500)
+            res.send({
+                'message': 'User already exist'
+            })
+        }
+
         User.create({
             username: req.body.username,
             password: req.body.password
         }).then((data) => {
-            res.send(data)
-        })
+            this._handleResponse(data)
+        }).catch((reason => {
+            this._handleResponse(reason)
+        }))
+    },
+    _exist (username) {
+        console.log(User.findOne({username: username}).exec());
+
+        return User.findOne({username: username}).exec() !== null
     },
     _handleResponse (err, data, res) {
         if (err) {
